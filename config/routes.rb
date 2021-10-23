@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
-  default_url_options :host => ENV['BASE_URL']
-
-  # namespace :api, defaults: { format: :json } do
-  #   resources :users, only: :show
-  #
-  #   get 'current_user', to: 'users#current_user', as: :current_user
-  # end
+  root to: 'static#index'
 
   scope path: 'v1/' do
     api_guard_routes for: 'users',
@@ -20,19 +14,9 @@ Rails.application.routes.draw do
                        tokens: 'v1/users/tokens'
                      }
 
-    get 'subjects', to: 'v1/subjects#index'
+    post 'password_reset_request', to: 'v1/users/passwords#reset_request'
+    post 'reset_password', to: 'v1/users/passwords#reset'
   end
 
   devise_for :users, skip: :all
-    # path: '',
-    # defaults: { format: :json },
-    # path_names: {
-    #   sign_in: 'api/login',
-    #   sign_out: 'api/logout',
-    #   registration: 'api/signup'
-    # },
-    # controllers: {
-    #   sessions: 'api/users/sessions',
-    #   registrations: 'api/users/registrations'
-    # }
 end

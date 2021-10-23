@@ -5,6 +5,10 @@ class V1::Users::RegistrationController < ApiGuard::RegistrationController
     init_resource(sign_up_params)
     if resource.save
       create_token_and_set_header(resource, resource_name)
+
+      # Tell the UserMailer to send a welcome email after save
+      UserMailer.with(user: resource).welcome_email.deliver_later
+
       render jsonapi: resource, status: :created
     else
       render jsonapi_errors: resource.errors, status: 400

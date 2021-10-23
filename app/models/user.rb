@@ -6,17 +6,31 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :username, presence: true, uniqueness: true
 
-  # def weak_words
-  #   ['gradebooklet', self.username]
-  # end
+  validates :email, 'valid_email_2/email': { mx: true, disposable: true, disallow_subaddressing: true}
 
   def authenticate(password)
     valid_password?(password)
   end
 
-  validates :username, presence: true, uniqueness: true
+  def generate_password_token!
+    self.reset_password_token = generate_token
+    self.reset_password_sent_at = Time.now.utc
+    save!
+  end
 
-  validates :email, 'valid_email_2/email': { mx: true, disposable: true, disallow_subaddressing: true}
+  def password_token_valid?
+    sent_at = self.reset_password_sent_at
 
+    return false if sent_at.nil?
+
+    (sent_at + 4.hours) > Time.now.utc
+  end
+
+  private
+
+  def generate_token
+    SecureRandom.hex(15)
+  end
 end

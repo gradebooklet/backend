@@ -38,6 +38,9 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Use mailcatcher to gather mail locally
+  gem 'mailcatcher'
 end
 
 group :test do
@@ -74,3 +77,9 @@ gem 'api_guard'
 
 # Use rack_attack to prevent unnecessary requests
 gem 'rack-attack'
+
+gem 'actionview-encoded_mail_to'
+
+gem 'sidekiq'
+
+gem 'redis-rails'

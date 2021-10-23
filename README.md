@@ -1,6 +1,6 @@
-# gradebooklet-backend (under construction at the moment.)
+![alt backend image](app/assets/images/backend.png)
 
-![alt backend image](public/backend.png)
+# gradebooklet-backend (under construction at the moment.)
 
 Rails 6 API-Only Backend, made for the gradebooklet mobile application.
 

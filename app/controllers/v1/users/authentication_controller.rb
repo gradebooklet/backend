@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class V1::Users::AuthenticationController < ApiGuard::AuthenticationController
+  before_action :find_resource, only: [:create]
   before_action :authenticate_resource, only: [:destroy]
 
   def create
